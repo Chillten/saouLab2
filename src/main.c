@@ -9,7 +9,7 @@
 #include "hashtab.h"
 #include "get_time.c"
 
-const int MAX_WORDS = 350001;
+const int MAX_WORDS = 350000;
 const int STEP = 10000;
 const int COUNT_OF_SEARCH = 100;
 
@@ -62,7 +62,7 @@ int main() {
 //        if(i % STEP == 0){
 //            timeTable[ti] = 0;
 //            for(int j = 0; j < COUNT_OF_SEARCH; j++){
-//                int r = getrand(0, i);
+//                int r = getrand(1, i);
 //                t = get_time();
 ////                node = bstree_lookup(tree, words[r]);
 ////                node = bstree_min(tree);
@@ -83,10 +83,12 @@ int main() {
     listnode *hashtabJenk[HASHTAB_SIZE], *nodeJenk;
     hashtab_init(hashtabJenk);
 
-    for (i = 1; i < MAX_WORDS; i++) {
+    for (i = 0; i < MAX_WORDS; i++) {
         int ti = (i - 1) / STEP;
 //        bstree_add(tree, words[i], i);
+        USE_JENK = 0;
         hashtab_add(hashtab, words[i], i);
+        USE_JENK = 1;
         hashtab_add(hashtabJenk, words[i], i);
         if (i % STEP == 0) {
             timeTableExtendet[0][ti] = timeTableExtendet[1][ti] = 0;
