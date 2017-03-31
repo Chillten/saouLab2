@@ -10,7 +10,7 @@
 
 int USE_JENK = 0;
 
-const u_int32_t HASHTAB_SIZE = 41;
+const u_int32_t HASHTAB_SIZE = 1024 * 16;
 
 u_int32_t jenkins_one_at_a_time_hash(char *key, size_t len) {
     u_int32_t hash, i;
@@ -42,6 +42,20 @@ void hashtab_init(listnode **hashtab) {
     int i;
     for (i = 0; i < HASHTAB_SIZE; i++) {
         hashtab[i] = NULL;
+    }
+}
+
+void hashtab_free(listnode **hashtab){
+    for(int i = 0; i < HASHTAB_SIZE; i++)
+        if(hashtab[i] != NULL)
+            listnode_free(hashtab[i]);
+}
+
+void listnode_free(listnode *node){
+    if(node!= NULL){
+        if(node->next!= NULL)
+            listnode_free(node->next);
+        free(node);
     }
 }
 

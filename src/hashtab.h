@@ -21,6 +21,8 @@ u_int32_t hashtab_hash(char *key);
 
 void hashtab_init(listnode **hashtab);
 
+void hashtab_free(listnode **hashtab);
+
 void hashtab_add(listnode **hashtab, char *key, int value);
 
 listnode *hashtab_lookup(listnode **hashtab, char *key);

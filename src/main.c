@@ -51,22 +51,19 @@ int main() {
     }
 
 //    bstree *tree = bstree_create(words[0], 0), *node;
-    listnode *hashtab[HASHTAB_SIZE], *node;
-    hashtab_init(hashtab);
-
-
+//
 //    for(i = 1; i < MAX_WORDS; i++){
 //        int ti = (i-1) / STEP;
-////        bstree_add(tree, words[i], i);
-//        hashtab_add(hashtab, words[i], i);
+//        bstree_add(tree, words[i], i);
+////        hashtab_add(hashtab, words[i], i);
 //        if(i % STEP == 0){
 //            timeTable[ti] = 0;
 //            for(int j = 0; j < COUNT_OF_SEARCH; j++){
 //                int r = getrand(1, i);
 //                t = get_time();
-////                node = bstree_lookup(tree, words[r]);
+//                node = bstree_lookup(tree, words[r]);
 ////                node = bstree_min(tree);
-//                node = hashtab_lookup(hashtab, words[r]);
+////                node = hashtab_lookup(hashtab, words[r]);
 //                timeTable[ti] += get_time() - t;
 //               if(strcmp(node->key, words[r]) != 0){
 //                   printf("aAAAAAAAAAAAAAA!!!\n");
@@ -77,7 +74,8 @@ int main() {
 //        }
 //    }
 
-
+    listnode *hashtab[HASHTAB_SIZE], *node;
+    hashtab_init(hashtab);
     double timeTableExtendet[2][MAX_WORDS / STEP + 1];
 
     listnode *hashtabJenk[HASHTAB_SIZE], *nodeJenk;
@@ -90,7 +88,7 @@ int main() {
         hashtab_add(hashtab, words[i], i);
         USE_JENK = 1;
         hashtab_add(hashtabJenk, words[i], i);
-        if (i % STEP == 0) {
+        if (i % STEP == 0 && i != 0) {
             timeTableExtendet[0][ti] = timeTableExtendet[1][ti] = 0;
             for (int j = 0; j < COUNT_OF_SEARCH; j++) {
                 int r = getrand(0, i);
@@ -113,13 +111,21 @@ int main() {
             }
             timeTableExtendet[0][ti] /= COUNT_OF_SEARCH;
             timeTableExtendet[1][ti] /= COUNT_OF_SEARCH;
-            printf("%d %.9lf %.9lf %.9lf\n", i, timeTableExtendet[0][ti], timeTableExtendet[1][ti],
-                   timeTableExtendet[0][ti] - timeTableExtendet[1][ti]);
+
+            int colCountDef = 0, colCountJen = 0;
+            for(int k = 0; k < HASHTAB_SIZE; k++){
+                if(hashtab[k] == NULL) colCountDef++;
+                if(hashtabJenk[k] == NULL) colCountJen++;
+            }
+
+            printf("%d %.9lf %d %.9lf %d \n", i, timeTableExtendet[0][ti],colCountDef,timeTableExtendet[1][ti], colCountJen);
         }
     }
 
 
     //printf("Size of tree = %d\n", f(tree));
-    //bstree_free(tree);
+//    bstree_free(tree);
+    hashtab_free(hashtab);
+    hashtab_free(hashtabJenk);
     exit(EXIT_SUCCESS);
 }

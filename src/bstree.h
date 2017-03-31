@@ -5,13 +5,11 @@
 #ifndef SAOULAB2_BSTREE_H
 #define SAOULAB2_BSTREE_H
 
-struct bstree {
+typedef struct bstree {
     int value;
     char *key;
     struct bstree *l, *r;
-};
-
-typedef struct bstree bstree;
+} bstree;
 
 bstree *bstree_create(char *key, int value);
 
